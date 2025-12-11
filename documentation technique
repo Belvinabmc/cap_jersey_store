@@ -1,0 +1,273 @@
+Projet développé dans le cadre du module
+
+« Coder avec l’IA Générative » – EPSI Paris
+
+1️⃣ Introduction
+
+Cap Jersey Store est une application web full-stack permettant de consulter, filtrer et acheter des maillots et des casquettes de sport (football et basketball).
+Le projet repose sur une architecture Node.js / Express / SQLite pour le backend et React.js pour le frontend.
+
+La documentation technique suivante décrit :
+
+l’architecture du système
+
+la conception des API
+
+la structure des données
+
+le fonctionnement du frontend
+
+les différents modules internes
+
+les pistes d’amélioration
+
+2️⃣ Architecture globale
+
+L’application est structurée en deux modules principaux :
+
+cap_jersey_store/
+ ├── backend/      → API REST (Node, Express, SQLite)
+ └── frontend/     → Application React (UI complète)
+
+
+Les deux parties communiquent via HTTP grâce à l’endpoint REST :
+
+GET http://localhost:5000/api/products
+
+3️⃣ Backend — Node.js + Express + SQLite
+3.1 Objectif du backend
+
+Le backend fournit :
+
+une API REST pour récupérer les produits
+
+une base SQLite stockant les maillots/casquettes
+
+un point d’entrée unique : server.js
+
+des routes regroupées dans /routes/productRoutes.js
+
+3.2 Structure backend
+backend/
+ ├── server.js               → configure Express + routes
+ ├── db.js                   → connexion & initialisation SQLite
+ └── routes/
+       └── productRoutes.js  → route GET /api/products
+
+3.3 Base de données SQLite
+Fichier : ecommerce.db
+
+La table products contient les colonnes suivantes :
+
+Champ	Type	Rôle
+id	INTEGER PK	Identifiant unique
+name	TEXT	Nom du produit
+type	TEXT	casquette / maillot
+sport	TEXT	foot / basket
+team	TEXT	Club (PSG, Lakers…)
+player	TEXT	Nom du joueur si applicable
+signed	INTEGER	0 = non signé, 1 = signé
+description	TEXT	Détails
+price	REAL	Prix
+stock	INTEGER	Quantité disponible
+imageUrl	TEXT	Lien de l’image
+Initialisation automatique
+
+Lors du premier lancement, db.js insère :
+
+une casquette Lakers
+
+un maillot PSG
+
+un maillot signé LeBron James
+
+3.4 API REST
+GET /api/products
+
+Description : renvoie la liste de tous les produits sous format JSON.
+
+Réponse :
+
+[
+  {
+    "id": 1,
+    "name": "Casquette Lakers Jaune",
+    "type": "casquette",
+    "sport": "basket",
+    "team": "Los Angeles Lakers",
+    "signed": 0,
+    "price": 29.99,
+    "stock": 15,
+    "imageUrl": "https://..."
+  },
+  ...
+]
+
+
+L’API ne gère pour l’instant pas de création ni de modification (CRUD limité volontairement pour cet atelier).
+
+4️⃣ Frontend — React.js
+4.1 Organisation
+frontend/
+ ├── src/
+ │    ├── App.js          → logique principale
+ │    ├── App.css         → styles globaux
+ │    └── index.js        → point d’entrée React
+
+5️⃣ Fonctionnement du frontend
+5.1 Récupération des produits
+
+Dans App.js :
+
+useEffect(() => {
+  fetch("http://localhost:5000/api/products")
+    .then(res => res.json())
+    .then(data => setProducts(data));
+}, []);
+
+
+L’état products contient tous les articles affichés sur le site.
+
+5.2 Slider d’accueil
+
+3 slides NBA
+
+changement automatique toutes les 4 secondes
+
+boutons suivant / précédent
+
+Structure :
+
+const sliderItems = [
+  { id: 1, title: "LeBron James", ... },
+  { id: 2, title: "Stephen Curry", ... },
+  { id: 3, title: "Ambiance NBA", ... }
+];
+
+5.3 Filtrage dynamique
+
+Les filtres sont appliqués directement sur le state :
+
+const filteredProducts = products.filter(p => {
+  if (filterType !== "all" && p.type !== filterType) return false;
+  if (filterSport !== "all" && p.sport !== filterSport) return false;
+  if (filterSigned === "signed" && !p.signed) return false;
+  if (filterSigned === "unsigned" && p.signed) return false;
+  return true;
+});
+
+
+Les filtres ne déclenchent aucun rechargement de page.
+
+5.4 Panier (cart)
+
+Le panier est stocké dans :
+
+const [cart, setCart] = useState([]);
+
+Ajouter un produit
+addToCart(product)
+
+
+→ incrémente la quantité du produit
+→ décrémente le stock local
+
+Retirer un produit
+removeFromCart(productId)
+
+5.5 Formulaire de commande
+
+Champs gérés :
+
+Nom complet
+
+Email
+
+Adresse
+
+Ville
+
+Code postal
+
+Mode de paiement
+
+Après validation :
+
+Le panier se vide
+
+Un message récapitulatif apparaît
+
+5.6 Modal de détail produit
+
+Lorsque l’utilisateur clique sur Détails, une fenêtre modale s'affiche avec :
+
+l’image
+
+le nom
+
+le prix
+
+l’équipe
+
+le joueur
+
+un bouton fermer
+
+6️⃣ Diagrammes d’architecture
+6.1 Diagramme simple d’architecture logique
+Utilisateur
+    │
+    ▼
+Interface React (App.js)
+    │
+    ▼
+Fetch API → http://localhost:5000/api/products
+    │
+    ▼
+Serveur Express (server.js)
+    │
+    ▼
+SQLite (db.js)
+
+7️⃣ Sécurité et limites
+
+Pas d’authentification utilisateur
+
+Pas de gestion réelle du stock en base
+
+Pas de validation backend des commandes
+
+API ouverte (uniquement GET)
+
+Ces limitations sont normales dans un atelier pédagogique.
+
+8️⃣ Déploiement (optionnel)
+
+Le projet peut être facilement déployé via :
+
+Frontend : Vercel, Netlify
+
+Backend : Render, Railway
+
+BD SQLite : à remplacer par PostgreSQL ou MySQL pour l’upload en cloud
+
+9️⃣ Améliorations futures
+Fonction	Objectif
+Authentification	compte client + historique
+Paiement Stripe	passage en production
+CRUD Admin	ajout/modification produits
+Panier persistant	sauvegarde navigateur
+Stock synchronisé	mises à jour multi-utilisateurs
+🔟 Conclusion
+
+Cette application illustre :
+
+l’intégration d’un backend API REST
+
+une interface moderne React
+
+la gestion d'un panier dynamique
+
+l’utilisation d’une IA pour accélérer et fiabiliser le développement
+
+Ce document fournit toutes les informations techniques nécessaires pour maintenir, mettre à jour ou étendre l’application.
