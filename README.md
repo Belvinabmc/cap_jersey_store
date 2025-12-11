@@ -1,196 +1,204 @@
-🚀 Cap Jersey Store
+# 🧢 Cap Jersey Store
 
-Site e-commerce de casquettes & maillots (foot & basket), parfois signés
+Cap Jersey Store est une application e-commerce permettant d’acheter des casquettes et des maillots de sport (football & basketball).  
+Elle inclut un catalogue de produits, un système de filtres, un panier dynamique, un formulaire de commande et un design moderne.
 
-Projet réalisé dans le cadre du module Coder avec l’IA Générative
-Développé par Christiana Bassouaka & son binôme.
+Ce projet est réalisé dans le cadre du module :  
+**« Coder avec l’IA Générative » — EPSI Paris**
 
-📌 Présentation
+---
 
-Cap Jersey Store est une application e-commerce permettant :
+## 🎯 Objectifs du projet
 
-d’afficher des produits (casquettes, maillots foot/basket),
+- Développer une application web full-stack complète  
+- Apprendre à structurer un backend API REST  
+- Connecter un frontend React à une base SQLite  
+- Gérer un panier dynamique sans rafraîchissement  
+- Créer une interface moderne : slider, filtres, produits, modal  
+- Utiliser une IA pour accélérer et structurer le développement  
 
-de filtrer par type, sport et articles signés,
+---
 
-de consulter les détails d’un produit,
+## 🛠️ Stack technique
 
-d’ajouter/retirer du panier,
+| Côté | Technologie | Rôle |
+|------|-------------|------|
+| Frontend | **React.js** | Interface dynamique (produits, filtres, panier) |
+| Style | **CSS** | Design moderne |
+| Backend | **Node.js + Express** | API REST /products |
+| Base | **SQLite3** | Stockage local des produits |
+| Versioning | **Git & GitHub** | Collaboration & suivi |
 
-de mettre à jour le stock automatiquement,
+---
 
-de remplir un formulaire de commande,
+## 📐 Architecture du projet
 
-de valider une commande avec récapitulatif.
 
-Le projet utilise une architecture Backend + Frontend moderne, entièrement développée par nos soins.
 
-🛠️ Technologies utilisées
-Frontend
-
-React.js (Create-React-App)
-
-CSS (custom design)
-
-Fetch API (communication avec le backend)
-
-Backend
-
-Node.js
-
-Express.js
-
-SQLite3 (base de données locale)
-
-REST API
-
-Outils
-
-Git & GitHub
-
-VS Code
-
-PowerShell / Terminal
-
-📁 Structure du projet
-Cap_jersey_store/
-│
+cap_jersey_store/
 ├── backend/
-│   ├── server.js
-│   ├── db.js
-│   ├── routes/
-│   │    └── productRoutes.js
-│   └── ecommerce.db (auto-généré)
-│
-├── frontend/
-│   ├── public/
-│   ├── src/
-│   │    ├── App.js
-│   │    ├── App.css
-│   │    ├── index.js
-│   │    └── index.css
-│   └── package.json
-│
-└── README.md
+│ ├── server.js
+│ ├── db.js
+│ └── routes/productRoutes.js
+└── frontend/
+├── src/App.js
+├── src/App.css
+└── src/index.js
 
-⚙️ Installation & lancement du projet
-1️⃣ Cloner le projet
+
+---
+
+## ▶️ Installation & Exécution
+
+### 1️⃣ Cloner le projet
+
+```bash
 git clone https://github.com/Belvinabmc/cap_jersey_store.git
 cd cap_jersey_store
 
-🔧 Backend (Node.js + SQLite)
+2️⃣ Lancer le backend (API)
 cd backend
 npm install
 node server.js
 
 
-➡️ Le backend démarre sur :
-http://localhost:5000
+➡️ Serveur API sur : http://localhost:5000/api/products
 
-🎨 Frontend (React)
-
-Dans un autre terminal :
-
-cd frontend
+3️⃣ Lancer le frontend (React)
+cd ../frontend
 npm install
 npm start
 
 
-➡️ Le frontend démarre sur :
-http://localhost:3000
+➡️ Interface visible sur : http://localhost:3000
 
-🚀 Fonctionnalités principales
-🛍️ Produits
+✨ Fonctionnalités
+🎞️ Slider dynamique
 
-Affichage des casquettes & maillots
+3 images NBA
 
-Images, équipes, sports, prix, tailles
+Transition automatique et manuelle
 
-Détails du joueur (si signé ou non)
+Texte + tag intégrés
 
-🔎 Filtres
+📍 Catalogue produits
 
-Par type : Casquette / Maillot
+Affichage dynamique depuis l’API
 
-Par sport : Foot / Basket
+Maillots + casquettes
 
-Par signature : Signé / Non signé
+Stock en temps réel
 
-🛒 Panier
+Badge “Signé” pour les produits premium
 
-Ajouter un produit
+🎯 Filtrage intelligent
 
-Retirer un produit
+Type : casquette / maillot
 
-Mise à jour du stock en temps réel
+Sport : foot / basket
 
-Calcul automatique du total
+Signature : signé / non signé
 
-Nombre total d’articles
+🛒 Panier (header)
 
-🧾 Commande
+Ajouter / retirer un produit
 
-Formulaire client :
+Stock réduit / augmenté automatiquement
 
-Nom
+Total mis à jour en direct
 
-Email
+Panier ouvert depuis le header
 
-Adresse
+📝 Formulaire de commande
 
-CP + Ville
+Nom, Email, Adresse, Ville, Code Postal, Paiement
 
-Mode de paiement
+Récapitulatif final généré automatiquement
 
-Validation de commande
+Panier vidé après validation
 
-Message récapitulatif complet
+🔮 Améliorations futures
 
-🧠 Architecture API (Backend)
-Endpoint principal :
-✔ GET — /api/products
+Authentification client
 
-Retourne tous les produits :
+Espace admin avec gestion des produits
 
-[
-  {
-    "id": 1,
-    "name": "Casquette Lakers Jaune",
-    "price": 29.99,
-    "stock": 15
-  }
-]
+Paiement sécurisé (Stripe)
 
-📝 Améliorations possibles (Roadmap)
+Stock géré en base + multi-utilisateurs
 
-Page Admin (CRUD produits)
+Sauvegarde du panier dans le navigateur
 
-Authentification client (register/login)
+👤 Équipe
 
-Paiement simulé sécurisé
-
-Stock synchronisé dans la base (pas seulement côté frontend)
-
-Interface plus design (header, slider, animations)
-
-👩🏽‍💻 Auteurs
+Projet développé par :
 
 Christiana Bassouaka
-Développeuse Full-Stack Junior
-(EPSI Paris)
+Selma Hadj Khelifa
 
-Et binôme de projet 🎓
+EPSI Paris — Promotion 2025
+Module : Coder avec l’IA Générative
 
-🏁 Conclusion
+🤖 PROMPT IA — POUR RECRÉER L’APPLICATION AVEC UNE IA
 
-Ce projet nous a permis de :
+Voici le prompt à utiliser tel quel pour permettre à quelqu’un d’autre de refaire exactement la même application grâce à l’IA.
 
-manipuler une API REST
+📌 PROMPT À COPIER :
+Tu es une IA experte en développement web full-stack (Node.js / Express / SQLite / React).
 
-gérer un backend Node/Express
+Je veux que tu m’aides à recréer exactement l’application "Cap Jersey Store".
 
-créer une interface React dynamique
+Elle doit permettre :
+- d’afficher un catalogue de maillots et casquettes,
+- de filtrer les produits (type, sport, signature),
+- d’ajouter/retirer des articles du panier,
+- de décrémenter le stock à chaque ajout,
+- d’afficher un slider NBA sur la page d’accueil,
+- d’ouvrir une modal avec les détails d’un produit,
+- de valider une commande avec un formulaire complet,
+- d’afficher un récapitulatif détaillé,
+- d’avoir un bouton Panier dans le header.
 
-intégrer Git/GitHub pour travailler en équipe
+Tu dois produire :
 
-simuler les fonctionnalités essentielles d’un site e-commerce moderne
+1️⃣ Structure complète du projet :
+cap_jersey_store/
+ ├── backend/
+ │    ├── server.js
+ │    ├── db.js
+ │    └── routes/productRoutes.js
+ └── frontend/
+      ├── src/App.js
+      ├── src/App.css
+      └── src/index.js
+
+2️⃣ Backend Express :
+- route GET /api/products
+- base SQLite avec champs :
+  id, name, type, sport, team, player, price, stock, signed, imageUrl
+- insertion automatique de données de test (PSG, Lakers, Curry, LeBron…)
+
+3️⃣ Frontend React :
+- Header avec logo CJS + bouton Panier (badge de quantité)
+- Filtres intégrés dans le header
+- Slider de 3 images NBA (défilement auto + boutons)
+- Catalogue produits en cartes
+- Modal détails
+- Panier avec quantités dynamiques
+- Formulaire de finalisation de commande
+- Gestion du stock en direct
+
+4️⃣ Design :
+- Thème beige / gris clair
+- Cartes modernes
+- Boutons arrondis
+- Slider responsive
+- Panier en overlay
+
+5️⃣ Donne-moi aussi :
+- Les commandes pour lancer backend et frontend
+- La base SQLite complète
+- Le code final prêt à coller dans un projet réel
+- Des explications étape par étape
+
+Le code doit être complet, clair, commenté et totalement fonctionnel.
